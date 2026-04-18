@@ -1,9 +1,8 @@
-import css from "./NotesPage.module.css";
-("use client");
-
 import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import css from "./NotesPage.module.css";
+
+("use client");
 
 export default function NotesClient() {
   const { data, isLoading, error } = useQuery({
