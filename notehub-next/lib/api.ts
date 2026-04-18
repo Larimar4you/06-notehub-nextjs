@@ -1,8 +1,8 @@
 import axios, { type AxiosResponse } from "axios";
-import type { Note } from "../types/note";
+import type { NewNote, Note, NoteResponse } from "../types/note";
 
-const BASE_URL = import.meta.env.VITE_NOTEHUB_API_URL;
-const TOKEN = import.meta.env.VITE_NOTEHUB_TOKEN;
+const BASE_URL = process.env.NEXT_PUBLIC_NOTEHUB_API_URL;
+const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 const noteHubApi = axios.create({
   baseURL: BASE_URL,
@@ -10,15 +10,6 @@ const noteHubApi = axios.create({
     Authorization: `Bearer ${TOKEN}`,
   },
 });
-interface NoteResponse {
-  notes: Note[];
-  totalPages: number;
-}
-interface NewNote {
-  title: string;
-  content: string;
-  tag: string;
-}
 
 export const fetchNotes = async (
   page: number,
@@ -31,6 +22,11 @@ export const fetchNotes = async (
       search,
     },
   });
+  return response.data;
+};
+
+export const fetchNoteById = async (id: string): Promise<Note> => {
+  const response = await noteHubApi.get<Note>(`/notes/${id}`);
   return response.data;
 };
 
