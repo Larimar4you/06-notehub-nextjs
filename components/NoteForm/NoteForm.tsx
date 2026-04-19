@@ -5,14 +5,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "@/lib/api";
-import type { Note } from "@/types/note";
+import type { NoteTag } from "@/types/note";
 interface NoteFormProps {
   onClose: () => void;
 }
 interface FormValues {
   title: string;
   content: string;
-  tag: Note["tag"];
+  tag: NoteTag;
 }
 
 const initialValues: FormValues = {
@@ -35,7 +35,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: createNote,
+    mutationFn: (newNote: FormValues) => createNote(newNote),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       onClose();
@@ -47,7 +47,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   };
 
   return (
-    <Formik
+    <Formik<FormValues>
       initialValues={initialValues}
       validationSchema={NoteFormSchema}
       onSubmit={handleSubmit}
