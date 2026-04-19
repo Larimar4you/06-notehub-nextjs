@@ -11,6 +11,11 @@ const noteHubApi = axios.create({
   },
 });
 
+export interface NoteResponse {
+  notes: Note[];
+  totalPages: number;
+}
+
 export const fetchNotes = async (
   page: number,
   search: string,

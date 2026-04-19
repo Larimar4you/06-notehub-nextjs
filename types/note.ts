@@ -6,10 +6,6 @@ export interface Note {
   updatedAt: string;
   tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 }
-export interface NoteResponse {
-  notes: Note[];
-  totalPages: number;
-}
 export interface NewNote {
   title: string;
   content: string;
