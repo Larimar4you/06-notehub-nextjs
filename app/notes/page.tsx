@@ -1,4 +1,3 @@
-import css from "../notes/NotesPage.module.css";
 import {
   dehydrate,
   HydrationBoundary,
